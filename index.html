@@ -12,3 +12,23 @@
     .result{margin-top:20px;padding:16px;background:#f1f1f1;border-radius:8px;min-height:100px}
     .tg{margin-top:20px;text-align:center;color:#333}
     .tg a{color:#007bff;font-weight:bold}
+if(!text) return alert("Enter text");
+      document.getElementById("result").innerText = "Processing...";
+
+      // 你换成自己的LLM接口即可
+      const res = await fetch("https://你的转发接口", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [{role:"user",content:"Paraphrase this text: "+text}]
+        })
+      });
+      const data = await res.json();
+      let out = data.choices?.[0]?.message?.content || "Error";
+      document.getElementById("result").innerText = out;
+      count++;
+    }
+  </script>
+</body>
+</html>
